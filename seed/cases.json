@@ -1,0 +1,76 @@
+{
+  "authority_en": "Emirate of Al Zafra - Economic Development Authority",
+  "authority_ar": "إمارة الظفرة - هيئة التنمية الاقتصادية",
+  "cases": [
+    {
+      "id": "case-01",
+      "ref": "GOV-2026-01427",
+      "channel": "email",
+      "sender": "m.almansoori@falcontridge.ae",
+      "senderName_en": "Mariam Al Mansoori",
+      "senderName_ar": "مريم المنصوري",
+      "subject_en": "Trade Licence Renewal - Falcon Ridge Trading LLC",
+      "subject_ar": "تجديد الرخصة التجارية - شركة فالكون ريدج للتجارة",
+      "receivedAt": "2026-10-10T08:42:00+04:00",
+      "doc": "case-01.txt",
+      "slaHours": 24,
+      "expectedPath": "approve_ready"
+    },
+    {
+      "id": "case-02",
+      "ref": "GOV-2026-01431",
+      "channel": "portal",
+      "sender": "h.alnuaimi@buildcrest.ae",
+      "senderName_en": "Hamdan Al Nuaimi",
+      "senderName_ar": "حمدان النعيمي",
+      "subject_en": "Building Permit - Villa Extension, Plot 118, Al Waha District",
+      "subject_ar": "تصريح بناء - توسعة فيلا، قطعة 118، منطقة الواحة",
+      "receivedAt": "2026-10-10T08:51:00+04:00",
+      "doc": "case-02.txt",
+      "slaHours": 72,
+      "expectedPath": "escalate"
+    },
+    {
+      "id": "case-03",
+      "ref": "GOV-2026-01436",
+      "channel": "email",
+      "sender": "k.almansoori@falcontridge.ae",
+      "senderName_en": "Khalid Al Mansoori",
+      "senderName_ar": "خالد المنصوري",
+      "subject_en": "Activity Amendment - Add E-Commerce to Licence AZ-40291",
+      "subject_ar": "تعديل النشاط - إضافة التجارة الإلكترونية إلى الرخصة AZ-40291",
+      "receivedAt": "2026-10-10T09:03:00+04:00",
+      "doc": "case-03.txt",
+      "slaHours": 48,
+      "expectedPath": "approve_ready"
+    },
+    {
+      "id": "case-04",
+      "ref": "GOV-2026-01440",
+      "channel": "portal",
+      "sender": "n.issa@alnoorbakery.ae",
+      "senderName_en": "Nadim Issa",
+      "senderName_ar": "نديم عيسى",
+      "subject_en": "Fee Waiver Request - Al Noor Bakery LLC, Licence AZ-31875",
+      "subject_ar": "طلب إعفاء من الرسوم - مخبز النور، الرخصة AZ-31875",
+      "receivedAt": "2026-10-10T09:14:00+04:00",
+      "doc": "case-04.txt",
+      "slaHours": 96,
+      "expectedPath": "escalate"
+    },
+    {
+      "id": "case-05",
+      "ref": "GOV-2026-01444",
+      "channel": "email",
+      "sender": "o.haddad@crestline.ae",
+      "senderName_en": "Omar Haddad",
+      "senderName_ar": "عمر حداد",
+      "subject_en": "New Licence Application - Crestline Events Management",
+      "subject_ar": "طلب رخصة جديدة - كريستلاين لإدارة الفعاليات",
+      "receivedAt": "2026-10-10T09:27:00+04:00",
+      "doc": "case-05.txt",
+      "slaHours": 48,
+      "expectedPath": "request_info"
+    }
+  ]
+}

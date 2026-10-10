@@ -1,0 +1,138 @@
+{
+  "case-01": {
+    "classify": {
+      "case_type": "trade_licence_renewal",
+      "label_en": "Trade Licence Renewal",
+      "label_ar": "تجديد رخصة تجارية",
+      "confidence": 0.97,
+      "language": "en",
+      "summary_en": "Complete renewal filing for commercial licence AZ-40291 with all supporting documents.",
+      "fields": [
+        { "key": "licence_no", "label_en": "Licence no.", "label_ar": "رقم الرخصة", "value": "AZ-40291", "confidence": 0.99, "evidence": "Licence No. AZ-40291", "pii": false },
+        { "key": "legal_name", "label_en": "Legal name", "label_ar": "الاسم القانوني", "value": "Falcon Ridge Trading LLC", "confidence": 0.99, "evidence": "issued to Falcon Ridge Trading LLC", "pii": false },
+        { "key": "activity", "label_en": "Activity", "label_ar": "النشاط", "value": "General Trading (4690)", "confidence": 0.96, "evidence": "\"General Trading\" (Activity Code 4690)", "pii": false },
+        { "key": "manager", "label_en": "Manager", "label_ar": "المدير", "value": "Mariam Al Mansoori", "confidence": 0.98, "evidence": "Manager           : Mariam Al Mansoori", "pii": false },
+        { "key": "emirates_id", "label_en": "Emirates ID", "label_ar": "الهوية الإماراتية", "value": "784-1985-4029173-6", "confidence": 0.97, "evidence": "784-1985-4029173-6", "pii": true },
+        { "key": "phone", "label_en": "Phone", "label_ar": "الهاتف", "value": "+971-50-482-7714", "confidence": 0.95, "evidence": "+971-50-482-7714", "pii": true },
+        { "key": "expiry", "label_en": "Licence expiry", "label_ar": "انتهاء الرخصة", "value": "30 October 2026", "confidence": 0.98, "evidence": "30 October 2026", "pii": false },
+        { "key": "fee", "label_en": "Renewal fee", "label_ar": "رسوم التجديد", "value": "AED 3,200", "confidence": 0.97, "evidence": "AED 3,200", "pii": false },
+        { "key": "ejari", "label_en": "Tenancy (Ejari)", "label_ar": "عقد الإيجار", "value": "EJ-881204", "confidence": 0.93, "evidence": "EJ-881204", "pii": false }
+      ]
+    },
+    "draft": {
+      "decision_note_en": "Renewal for licence AZ-40291 (Falcon Ridge Trading LLC) is complete and compliant: all four required documents on file, licence active, fee matches the current schedule, and the 30 Oct 2026 expiry sits inside the renewal window. Recommend approval and issuance of the renewed licence. Invoice AED 3,200.",
+      "decision_note_ar": "اكتمل طلب تجديد الرخصة AZ-40291 (شركة فالكون ريدج للتجارة) وهو ممتثل: المستندات الأربعة المطلوبة مرفقة، الرخصة سارية، والرسوم مطابقة للجدول الحالي، وتاريخ الانتهاء 30 أكتوبر 2026 ضمن فترة التجديد. يوصى بالموافقة وإصدار الرخصة المجددة. قيمة الفاتورة 3,200 درهم.",
+      "email_subject": "Licence AZ-40291 renewal approved - GOV-2026-01427",
+      "email_en": "Dear Ms Al Mansoori,\n\nWe confirm receipt of your renewal application for Commercial Licence AZ-40291 (Falcon Ridge Trading LLC). Your application is complete and has been approved.\n\nA payment link for AED 3,200 has been issued to the registered account. The renewed licence will be released upon payment.\n\nReference: GOV-2026-01427\n\nRegards,\nLicensing Services Directorate\nAl Zafra Economic Development Authority",
+      "email_ar": "السيدة مريم المنصوري المحترمة،\n\nنشكركم على تقديم طلب تجديد الرخصة التجارية رقم AZ-40291 (شركة فالكون ريدج للتجارة). اكتمل طلبكم وتمت الموافقة عليه.\n\nتم إصدار رابط دفع بقيمة 3,200 درهم إلى الحساب المسجل، وستصدر الرخصة المجددة عند إتمام السداد.\n\nالمرجع: GOV-2026-01427\n\nمع خالص التحية،\nمديرية خدمات الترخيص\nهيئة التنمية الاقتصادية - إمارة الظفرة"
+    }
+  },
+  "case-02": {
+    "classify": {
+      "case_type": "building_permit",
+      "label_en": "Building Permit",
+      "label_ar": "تصريح بناء",
+      "confidence": 0.94,
+      "language": "en",
+      "summary_en": "Villa extension permit requesting a discretionary height variance in R-2 zone.",
+      "fields": [
+        { "key": "permit_scope", "label_en": "Permit scope", "label_ar": "نطاق التصريح", "value": "Villa extension, two storeys", "confidence": 0.95, "evidence": "a two-storey extension", "pii": false },
+        { "key": "plot", "label_en": "Plot", "label_ar": "القطعة", "value": "118, Al Waha District", "confidence": 0.97, "evidence": "118, Al Waha District", "pii": false },
+        { "key": "zoning", "label_en": "Zoning", "label_ar": "التصنيف", "value": "Residential R-2", "confidence": 0.96, "evidence": "Residential R-2", "pii": false },
+        { "key": "height", "label_en": "Proposed height", "label_ar": "الارتفاع المقترح", "value": "9.2 metres", "confidence": 0.97, "evidence": "9.2 metres", "pii": false },
+        { "key": "area", "label_en": "Added area", "label_ar": "المساحة المضافة", "value": "412 sqm", "confidence": 0.94, "evidence": "412 sqm", "pii": false },
+        { "key": "contractor", "label_en": "Contractor", "label_ar": "المقاول", "value": "Buildcrest Contracting LLC (AZ-55610)", "confidence": 0.95, "evidence": "Buildcrest Contracting LLC (Lic. AZ-55610)", "pii": false },
+        { "key": "owner", "label_en": "Owner", "label_ar": "المالك", "value": "Hamdan Al Nuaimi", "confidence": 0.96, "evidence": "Hamdan Al Nuaimi, +971-55-219-8830", "pii": false },
+        { "key": "emirates_id", "label_en": "Owner Emirates ID", "label_ar": "هوية المالك", "value": "784-1978-6601204-2", "confidence": 0.97, "evidence": "784-1978-6601204-2", "pii": true },
+        { "key": "phone", "label_en": "Owner phone", "label_ar": "هاتف المالك", "value": "+971-55-219-8830", "confidence": 0.95, "evidence": "+971-55-219-8830", "pii": true }
+      ]
+    },
+    "draft": {
+      "decision_note_en": "Permit request proposes 9.2m height in R-2 zone where the guideline is 8.0m. Applicant cites a Civil Defence fire-egress requirement and requests a discretionary variance under Building Code s7.3. The drawings and Civil Defence no-objection letter are on file. Granting the variance is outside agent authority - escalated to senior officer for adjudication.",
+      "decision_note_ar": "يطلب التصريح ارتفاع 9.2 متر في منطقة R-2 حيث الحد الاسترشادي 8.0 متر. يستشهد مقدم الطلب باشتراط الدفاع المدني لمخرج الحريق ويطلب استثناءً تقديرياً بموجب المادة 7.3 من كود البناء. المخططات وخطاب عدم الممانعة مرفقان. منح الاستثناء خارج صلاحيات النظام - تم التصعيد إلى الضابط الأول للبت.",
+      "email_subject": "Building permit GOV-2026-01431 referred for senior review",
+      "email_en": "Dear Mr Al Nuaimi,\n\nThank you for your building permit application for Plot 118, Al Waha District (ref GOV-2026-01431).\n\nYour request for a height variance under Section 7.3 of the Building Code has been referred to a senior permits officer for review. You will be contacted within 3 working days.\n\nRegards,\nPlanning & Permits Directorate\nAl Zafra Economic Development Authority",
+      "email_ar": "السيد حمدان النعيمي المحترم،\n\nنشكركم على طلب تصريح البناء للقطعة 118 بمنطقة الواحة (المرجع GOV-2026-01431).\n\nتمت إحالة طلب الاستثناء على الارتفاع بموجب المادة 7.3 من كود البناء إلى ضابط تصاريح أول للمراجعة. سيتم التواصل معكم خلال 3 أيام عمل.\n\nمع خالص التحية،\nمديرية التخطيط والتصاريح\nهيئة التنمية الاقتصادية - إمارة الظفرة"
+    }
+  },
+  "case-03": {
+    "classify": {
+      "case_type": "activity_amendment",
+      "label_en": "Licence Activity Amendment",
+      "label_ar": "تعديل نشاط الرخصة",
+      "confidence": 0.93,
+      "language": "en",
+      "summary_en": "Addition of e-commerce activity to licence AZ-40291 with board resolution on file.",
+      "fields": [
+        { "key": "licence_no", "label_en": "Licence no.", "label_ar": "رقم الرخصة", "value": "AZ-40291", "confidence": 0.99, "evidence": "Commercial Licence No. AZ-40291", "pii": false },
+        { "key": "legal_name", "label_en": "Legal name", "label_ar": "الاسم القانوني", "value": "Falcon Ridge Trading LLC", "confidence": 0.99, "evidence": "Falcon Ridge Trading LLC requests", "pii": false },
+        { "key": "current_activity", "label_en": "Current activity", "label_ar": "النشاط الحالي", "value": "General Trading (4690)", "confidence": 0.97, "evidence": "General Trading (4690)", "pii": false },
+        { "key": "requested_activity", "label_en": "Requested activity", "label_ar": "النشاط المطلوب", "value": "E-Commerce - Retail (4791)", "confidence": 0.96, "evidence": "E-Commerce - Retail (4791)", "pii": false },
+        { "key": "signatory", "label_en": "Authorised signatory", "label_ar": "المفوض بالتوقيع", "value": "Khalid Al Mansoori, Partner", "confidence": 0.96, "evidence": "Khalid Al Mansoori, Partner", "pii": false },
+        { "key": "emirates_id", "label_en": "Emirates ID", "label_ar": "الهوية الإماراتية", "value": "784-1982-7710039-1", "confidence": 0.97, "evidence": "784-1982-7710039-1", "pii": true },
+        { "key": "phone", "label_en": "Phone", "label_ar": "الهاتف", "value": "+971-56-330-1148", "confidence": 0.94, "evidence": "+971-56-330-1148", "pii": true },
+        { "key": "fee", "label_en": "Amendment fee", "label_ar": "رسوم التعديل", "value": "AED 650", "confidence": 0.95, "evidence": "AED 650", "pii": false }
+      ]
+    },
+    "draft": {
+      "decision_note_en": "Adding activity 'E-Commerce - Retail' (4791) to licence AZ-40291 is permitted under the General Trading category; board resolution and signatory Emirates ID are on file. Registry shows an outstanding balance of AED 250, appended to the amendment invoice. Note: a renewal for the same licence is in progress in parallel (case GOV-2026-01427) - recommend filing both under one record. Total invoice AED 900.",
+      "decision_note_ar": "إضافة نشاط 'التجارة الإلكترونية - تجزئة' (4791) إلى الرخصة AZ-40291 مسموح بها ضمن فئة التجارة العامة؛ قرار مجلس الإدارة ونسخة هوية المفوض مرفقان. يظهر السجل رصيداً مستحقاً 250 درهماً أُضيف إلى فاتورة التعديل. ملاحظة: يجري حالياً تجديد لنفس الرخصة بالتوازي (الملف GOV-2026-01427) - يوصى بضم الطلبين في سجل واحد. إجمالي الفاتورة 900 درهم.",
+      "email_subject": "Activity amendment for licence AZ-40291 approved - GOV-2026-01436",
+      "email_en": "Dear Mr Al Mansoori,\n\nYour request to add the activity 'E-Commerce - Retail (4791)' to Commercial Licence AZ-40291 has been approved.\n\nAn invoice of AED 900 has been issued (AED 650 amendment fee plus AED 250 outstanding balance). Your amendment will be filed together with the pending renewal for the same licence.\n\nReference: GOV-2026-01436\n\nRegards,\nLicensing Services Directorate\nAl Zafra Economic Development Authority",
+      "email_ar": "السيد خالد المنصوري المحترم،\n\nتمت الموافقة على طلب إضافة نشاط 'التجارة الإلكترونية - تجزئة (4791)' إلى الرخصة التجارية AZ-40291.\n\nصدرت فاتورة بقيمة 900 درهم (650 درهماً رسوم تعديل إضافة إلى 250 درهماً رصيد مستحق). سيُحفظ التعديل مع طلب التجديد الجاري لنفس الرخصة.\n\nالمرجع: GOV-2026-01436\n\nمع خالص التحية،\nمديرية خدمات الترخيص\nهيئة التنمية الاقتصادية - إمارة الظفرة"
+    }
+  },
+  "case-04": {
+    "classify": {
+      "case_type": "fee_waiver",
+      "label_en": "Fee Waiver Request",
+      "label_ar": "طلب إعفاء من الرسوم",
+      "confidence": 0.91,
+      "language": "en",
+      "summary_en": "Waiver of AED 1,800 licence fee on hardship grounds; revenue marginally above threshold.",
+      "fields": [
+        { "key": "licence_no", "label_en": "Licence no.", "label_ar": "رقم الرخصة", "value": "AZ-31875", "confidence": 0.99, "evidence": "Licence No. AZ-31875", "pii": false },
+        { "key": "legal_name", "label_en": "Legal name", "label_ar": "الاسم القانوني", "value": "Al Noor Bakery LLC", "confidence": 0.98, "evidence": "Al Noor Bakery LLC respectfully requests", "pii": false },
+        { "key": "waiver_amount", "label_en": "Waiver requested", "label_ar": "الإعفاء المطلوب", "value": "AED 1,800", "confidence": 0.97, "evidence": "AED 1,800", "pii": false },
+        { "key": "revenue", "label_en": "Annual revenue", "label_ar": "الإيراد السنوي", "value": "AED 412,300", "confidence": 0.98, "evidence": "AED 412,300", "pii": false },
+        { "key": "owner", "label_en": "Owner", "label_ar": "المالك", "value": "Nadim Issa", "confidence": 0.96, "evidence": "Nadim Issa", "pii": false },
+        { "key": "emirates_id", "label_en": "Emirates ID", "label_ar": "الهوية الإماراتية", "value": "784-1990-3387412-8", "confidence": 0.97, "evidence": "784-1990-3387412-8", "pii": true },
+        { "key": "phone", "label_en": "Phone", "label_ar": "الهاتف", "value": "+971-52-604-9913", "confidence": 0.95, "evidence": "+971-52-604-9913", "pii": true },
+        { "key": "staff", "label_en": "Staff", "label_ar": "الموظفون", "value": "6 employees", "confidence": 0.9, "evidence": "6 employees", "pii": false },
+        { "key": "history", "label_en": "Licence history", "label_ar": "سجل الرخصة", "value": "11 years, clean record", "confidence": 0.92, "evidence": "11 years with a clean compliance", "pii": false }
+      ]
+    },
+    "draft": {
+      "decision_note_en": "Fee waiver requested for licence AZ-31875 (Al Noor Bakery LLC). Audited revenue of AED 412,300 exceeds the AED 400,000 statutory threshold by 3.1%, so automatic eligibility fails. The applicant invokes the discretionary hardship provision: heritage zone premises, revenue loss from redevelopment works, and an 11-year clean record. Discretionary waivers are outside agent authority - escalated to senior officer.",
+      "decision_note_ar": "طُلب إعفاء من الرسوم للرخصة AZ-31875 (مخبز النور). الإيراد المدقق 412,300 درهم يتجاوز الحد النظامي 400,000 درهم بنسبة 3.1%، وبالتالي لا تنطبق الأهلية التلقائية. يستند مقدم الطلب إلى بند الاستثناء للظروف الاستثنائية: موقع في المنطقة التراثية، وانخفاض الإيراد بسبب أعمال التطوير، وسجل نظيف لمدة 11 عاماً. قرارات الإعفاء التقديرية خارج صلاحيات النظام - تم التصعيد إلى الضابط الأول.",
+      "email_subject": "Fee waiver request GOV-2026-01440 under senior review",
+      "email_en": "Dear Mr Issa,\n\nThank you for your fee waiver request for Licence AZ-31875 (ref GOV-2026-01440).\n\nYour request has been referred to a senior officer under the discretionary hardship provision, as your stated revenue is marginally above the standard threshold. You will receive a decision within 5 working days.\n\nRegards,\nSME Support Office\nAl Zafra Economic Development Authority",
+      "email_ar": "السيد نديم عيسى المحترم،\n\nنشكركم على طلب الإعفاء من الرسوم للرخصة AZ-31875 (المرجع GOV-2026-01440).\n\nأُحيل طلبكم إلى الضابط الأول بموجب بند الاستثناء للظروف الاستثنائية، حيث إن الإيراد المصرح به أعلى بقليل من الحد المعتاد. ستصلكم النتيجة خلال 5 أيام عمل.\n\nمع خالص التحية،\nمكتب دعم المشاريع الصغيرة والمتوسطة\nهيئة التنمية الاقتصادية - إمارة الظفرة"
+    }
+  },
+  "case-05": {
+    "classify": {
+      "case_type": "new_licence_application",
+      "label_en": "New Licence Application",
+      "label_ar": "طلب رخصة جديدة",
+      "confidence": 0.86,
+      "language": "en",
+      "summary_en": "New licence filing for an events management company; key documents declared as pending.",
+      "fields": [
+        { "key": "trade_name", "label_en": "Trade name", "label_ar": "الاسم التجاري", "value": "Crestline Events Management", "confidence": 0.98, "evidence": "Crestline Events Management", "pii": false },
+        { "key": "legal_form", "label_en": "Legal form", "label_ar": "الشكل القانوني", "value": "LLC (in formation)", "confidence": 0.93, "evidence": "LLC (in formation)", "pii": false },
+        { "key": "manager", "label_en": "Manager", "label_ar": "المدير", "value": "Omar Haddad", "confidence": 0.97, "evidence": "Omar Haddad", "pii": false },
+        { "key": "phone", "label_en": "Phone", "label_ar": "الهاتف", "value": "+971-54-778-2250", "confidence": 0.94, "evidence": "+971-54-778-2250", "pii": true },
+        { "key": "activity", "label_en": "Activity", "label_ar": "النشاط", "value": "corporate event management services", "confidence": 0.82, "evidence": "corporate event management services", "pii": false },
+        { "key": "tenancy", "label_en": "Tenancy contract", "label_ar": "عقد الإيجار", "value": "not provided", "confidence": 0.9, "evidence": "being finalised with the landlord", "pii": false }
+      ]
+    },
+    "draft": {
+      "decision_note_en": "New licence application for Crestline Events Management is incomplete: tenancy contract (Ejari) not yet executed, one partner's Emirates ID copy pending attestation, and no activity code was specified. The applicant stated the items are in progress, so this is a deficiency notice rather than a rejection. Drafted request lists the three required items with a 30-day submission window.",
+      "decision_note_ar": "طلب الرخصة الجديدة لشركة كريستلاين لإدارة الفعاليات غير مكتمل: عقد الإيجار (إيجاري) لم يوقع بعد، ونسخة هوية أحد الشركاء قيد التصديق، ولم يُحدد رمز النشاط. ذكر مقدم الطلب أن المستندات قيد الإنجاز، لذا فهذا إشعار استيفاء وليس رفضاً. أعددنا طلباً يوضح البنود الثلاثة المطلوبة مع مهلة 30 يوماً.",
+      "email_subject": "Action required: documents needed for GOV-2026-01444",
+      "email_en": "Dear Mr Haddad,\n\nThank you for your new licence application for Crestline Events Management (ref GOV-2026-01444).\n\nTo proceed, please submit the following within 30 days:\n  1. Executed tenancy contract (Ejari registration)\n  2. Emirates ID copy for the second partner\n  3. Requested activity code from the licensed activity schedule\n\nYou may reply directly to this message with the documents attached. Your file will remain open until then.\n\nRegards,\nLicensing Services Directorate\nAl Zafra Economic Development Authority",
+      "email_ar": "السيد عمر حداد المحترم،\n\nنشكركم على طلب الرخصة الجديدة لشركة كريستلاين لإدارة الفعاليات (المرجع GOV-2026-01444).\n\nلمتابعة المعاملة، يرجى تقديم ما يلي خلال 30 يوماً:\n  1. عقد الإيجار الموقع (مسجل في إيجاري)\n  2. نسخة الهوية الإماراتية للشريك الثاني\n  3. رمز النشاط المطلوب من جدول الأنشطة المرخصة\n\nيمكنكم الرد على هذه الرسالة مباشرة مع إرفاق المستندات. سيبقى ملفكم مفتوحاً حتى ذلك الحين.\n\nمع خالص التحية،\nمديرية خدمات الترخيص\nهيئة التنمية الاقتصادية - إمارة الظفرة"
+    }
+  }
+}

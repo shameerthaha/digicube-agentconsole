@@ -29,7 +29,14 @@ function readBody(req) {
 }
 
 export function agentApiMiddleware(req, res, next) {
-  const url = new URL(req.url, 'http://local')
+  let url = new URL(req.url, 'http://local')
+  // Serverless single-function entry: /handler?r=<route>&<params>
+  if ((url.pathname === '/handler' || url.pathname === '/api/handler') && url.searchParams.get('r')) {
+    const r = url.searchParams.get('r').replace(/^\/+/, '')
+    url.searchParams.delete('r')
+    const rest = url.searchParams.toString()
+    url = new URL('/' + r + (rest ? '?' + rest : ''), 'http://local')
+  }
   const p = url.pathname
 
   if (req.method === 'GET' && p === '/health') {

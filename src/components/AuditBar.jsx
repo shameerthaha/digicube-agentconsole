@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { CaretUp, CaretDown, Link as LinkIcon, ShieldCheck, DownloadSimple, XCircle } from '@phosphor-icons/react'
 import { t } from '../i18n.js'
-import { cx, fmtTime, SCOPE_STYLE } from '../lib.js'
+import { cx, fmtTime, SCOPE_STYLE, api } from '../lib.js'
 
 export default function AuditBar({ lang, audit }) {
   const [open, setOpen] = useState(false)
@@ -10,7 +10,7 @@ export default function AuditBar({ lang, audit }) {
   const last = audit[audit.length - 1]
 
   const doVerify = async () => {
-    const r = await fetch('/api/audit/verify').then((x) => x.json()).catch(() => ({ valid: false }))
+    const r = await fetch(api('audit/verify')).then((x) => x.json()).catch(() => ({ valid: false }))
     setVerify(r)
     setTimeout(() => setVerify(null), 5000)
   }

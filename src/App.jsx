@@ -5,6 +5,7 @@ import AgentColumn from './components/AgentColumn.jsx'
 import Checkpoint from './components/Checkpoint.jsx'
 import AuditBar from './components/AuditBar.jsx'
 import { t } from './i18n.js'
+import { api } from './lib.js'
 
 const FINAL_STATUS = { approve: 'dispatched', escalate: 'escalated', info: 'infoRequested', reject: 'rejected' }
 
@@ -21,12 +22,12 @@ export default function App() {
   const [tick, setTick] = useState(0)
 
   useEffect(() => {
-    fetch('/api/cases').then((r) => r.json()).then((d) => {
+    fetch(api('cases')).then((r) => r.json()).then((d) => {
       setCases(d.cases.map((c) => ({ ...c, status: 'queued' })))
       setSelectedId(d.cases[0]?.id ?? null)
     })
-    fetch('/api/health').then((r) => r.json()).then(setHealth).catch(() => {})
-    fetch('/api/audit').then((r) => r.json()).then((d) => setAudit(d.entries)).catch(() => {})
+    fetch(api('health')).then((r) => r.json()).then(setHealth).catch(() => {})
+    fetch(api('audit')).then((r) => r.json()).then((d) => setAudit(d.entries)).catch(() => {})
   }, [])
 
   useEffect(() => {
@@ -55,7 +56,7 @@ export default function App() {
       if (runs[id]) return
       updateCase(id, { status: 'running' })
       setRuns((r) => ({ ...r, [id]: { status: 'running', steps: {}, order: [], signals: [], startedAt: Date.now() } }))
-      const es = new EventSource(`/api/agent/run?caseId=${id}`)
+      const es = new EventSource(api('agent/run', { caseId: id }))
       esRef.current = es
       es.onmessage = (e) => {
         const msg = JSON.parse(e.data)
@@ -96,7 +97,7 @@ export default function App() {
       const c = cases.find((x) => x.id === id)
       const run = runs[id]
       const decision = run?.steps?.decide?.output?.action
-      const res = await fetch('/api/audit/action', {
+      const res = await fetch(api('audit/action'), {
         method: 'POST',
         headers: { 'content-type': 'application/json' },
         body: JSON.stringify({ caseRef: c.ref, action, outcome: decision, edited: Boolean(edited) }),

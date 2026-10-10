@@ -1,5 +1,11 @@
 export const cx = (...xs) => xs.filter(Boolean).join(' ')
 
+// Single serverless function serves every route via ?r=<path>.
+export const api = (path, params = {}) => {
+  const q = new URLSearchParams({ r: path, ...params })
+  return `/api/handler?${q}`
+}
+
 export function maskValue(value) {
   // Emirates ID: 784-1985-4029173-6 -> 784-****-*******-6
   if (/^784-\d{4}-\d{7}-\d$/.test(value)) {

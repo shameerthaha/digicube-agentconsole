@@ -16,6 +16,21 @@ deterministic canned outputs out of the box (badge shows LLM FALLBACK).
 Set `ANTHROPIC_API_KEY` in `.env` for live Claude classification,
 extraction and drafting (badge shows LLM LIVE).
 
+## Cost control
+
+Three modes, via `AGENT_LLM_MODE` and `AGENT_LLM_BUDGET`:
+
+- `live` (default): calls Claude. `AGENT_LLM_BUDGET` caps live calls per
+  server instance (default 60, ~30 full runs) - bounds spend even if the
+  public URL leaks.
+- `replay`: never calls the API. Serves `seed/live-cache.json` - real
+  Claude outputs captured once with `npm run capture`, committed to the
+  repo. Badge shows LLM REPLAY. Misses fall back to canned data.
+- To cap spend at the provider level, set a workspace spend limit in
+  the Anthropic Console (Billing > Limits) for the key's workspace.
+
+The public deployment is configured with `AGENT_LLM_MODE=replay`.
+
 ## Demo script (3 runs, all code paths)
 
 1. **GOV-2026-01427** - Trade licence renewal. Clean straight-through:

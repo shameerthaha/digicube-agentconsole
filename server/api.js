@@ -3,7 +3,7 @@ import path from 'node:path'
 import { fileURLToPath } from 'node:url'
 import { runAgent } from './agent.js'
 import { getChain, verifyChain, appendAudit } from './audit.js'
-import { llmAvailable, llmModel } from './llm.js'
+import { llmMode, llmModel, llmSpend } from './llm.js'
 
 function resolveSeedDir() {
   const local = path.join(path.dirname(fileURLToPath(import.meta.url)), '..', 'seed')
@@ -40,7 +40,7 @@ export function agentApiMiddleware(req, res, next) {
   const p = url.pathname
 
   if (req.method === 'GET' && p === '/health') {
-    return json(res, { ok: true, llm: llmAvailable() ? 'live' : 'fallback', model: llmModel() })
+    return json(res, { ok: true, llm: llmMode(), model: llmModel(), spend: llmSpend() })
   }
 
   if (req.method === 'GET' && p === '/cases') {

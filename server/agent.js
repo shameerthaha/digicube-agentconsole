@@ -3,7 +3,7 @@ import path from 'node:path'
 import { fileURLToPath } from 'node:url'
 import { policyEngine, registryApi, paymentsApi, fileToCaseRecord } from './tools.js'
 import { appendAudit } from './audit.js'
-import { llmAvailable, callClaudeJSON, CLASSIFY_SYSTEM, DRAFT_SYSTEM } from './llm.js'
+import { llmAvailable, llmMode, callClaudeJSON, CLASSIFY_SYSTEM, DRAFT_SYSTEM } from './llm.js'
 
 function resolveSeedDir() {
   const local = path.join(path.dirname(fileURLToPath(import.meta.url)), '..', 'seed')
@@ -24,6 +24,29 @@ const STEP_DEFS = [
   { id: 'route', tool: 'case_router', scope: 'WRITE', title_en: 'Route to officer queue', title_ar: 'التحويل إلى قائمة الضابط' },
 ]
 
+export const classifyUser = (caseRec, docText) =>
+  `Case ref: ${caseRec.ref}\nSender: ${caseRec.sender}\nSubject: ${caseRec.subject_en}\n\nDOCUMENT:\n${docText}`
+
+export const extractUser = (docText) => `Extract fields only. DOCUMENT:\n${docText}`
+
+export const draftUser = (caseRec, decision, extraction, policy) =>
+  `Case ${caseRec.ref} (${caseRec.subject_en}). Decision: ${JSON.stringify(decision)}. Fields: ${JSON.stringify(
+    extraction.fields?.map((f) => [f.key, f.value]),
+  )}. Rules: ${JSON.stringify(policy.rules.map((r) => [r.id, r.result]))}.`
+
+export function computeDecision(classify, rules) {
+  if (classify.confidence < 0.8)
+    return { action: 'escalate', reason_en: `Classification confidence ${(classify.confidence * 100).toFixed(0)}% is below the 80% threshold.`, reason_ar: `ثقة التصنيف ${(classify.confidence * 100).toFixed(0)}% دون الحد الأدنى 80%.` }
+  const amb = rules.find((r) => r.result === 'fail' && r.ambiguous)
+  if (amb)
+    return { action: 'escalate', rule: amb.id, reason_en: `Rule "${amb.label_en}" failed on a discretionary point: ${amb.detail_en}`, reason_ar: `القاعدة "${amb.label_ar}" فشلت في نقطة تقديرية: ${amb.detail_ar}` }
+  const hard = rules.find((r) => r.result === 'fail')
+  if (hard)
+    return { action: 'request_info', rule: hard.id, missing_en: hard.missing_en ?? [], missing_ar: hard.missing_ar ?? [], reason_en: `Rule "${hard.label_en}" failed: ${hard.detail_en}`, reason_ar: `القاعدة "${hard.label_ar}" فشلت: ${hard.detail_ar}` }
+  const warns = rules.filter((r) => r.result === 'warn').map((r) => ({ label_en: r.label_en, label_ar: r.label_ar, detail_en: r.detail_en, detail_ar: r.detail_ar }))
+  return { action: 'approve_ready', warnings: warns, reason_en: 'All mandatory checks passed. Ready for officer sign-off.', reason_ar: 'جميع الفحوصات الإلزامية ناجحة. جاهز لتوقيع الضابط.' }
+}
+
 export async function runAgent(caseRec, send) {
   const runId = 'run-' + Math.random().toString(36).slice(2, 9)
   const t0 = Date.now()
@@ -31,7 +54,7 @@ export async function runAgent(caseRec, send) {
   const docText = readFileSync(path.join(seedDir, 'docs', caseRec.doc), 'utf8')
   let usedFallback = false
 
-  send({ event: 'meta', runId, llm: llmAvailable() ? 'live' : 'fallback' })
+  send({ event: 'meta', runId, llm: llmMode() })
 
   const emitStep = async (def, minMs, workFn, auditInput) => {
     const idx = STEP_DEFS.indexOf(def)
@@ -57,29 +80,24 @@ export async function runAgent(caseRec, send) {
     return output
   }
 
-  // 1 - ingest + classify (LLM or canned)
+  // 1 - ingest + classify (LLM or canned). The classify response also carries
+  // the extracted fields, so extraction reuses them - no second LLM call.
+  let liveFields = null
   const classify = await emitStep(STEP_DEFS[0], 700, async () => {
     const live = await callClaudeJSON({
+      cacheKey: `classify:${caseRec.id}`,
       system: CLASSIFY_SYSTEM,
-      user: `Case ref: ${caseRec.ref}\nSender: ${caseRec.sender}\nSubject: ${caseRec.subject_en}\n\nDOCUMENT:\n${docText}`,
+      user: classifyUser(caseRec, docText),
       maxTokens: 2000,
     })
     const out = live ?? (usedFallback = true, canned.classify)
+    liveFields = out.fields ?? null
     return { case_type: out.case_type, label_en: out.label_en, label_ar: out.label_ar, confidence: out.confidence, language: out.language, summary_en: out.summary_en, llm: live ? 'claude' : 'canned' }
   }, { doc: caseRec.doc, sender: caseRec.sender })
 
-  // 2 - extract fields (reuse classify fields; LLM single call already got them)
+  // 2 - extract fields
   const extraction = await emitStep(STEP_DEFS[1], 600, async () => {
-    let fields = null
-    if (!usedFallback && llmAvailable()) {
-      const live = await callClaudeJSON({
-        system: CLASSIFY_SYSTEM,
-        user: `Extract fields only. DOCUMENT:\n${docText}`,
-        maxTokens: 2000,
-      })
-      fields = live?.fields ?? null
-    }
-    if (!fields) { usedFallback = true; fields = canned.classify.fields }
+    const fields = liveFields ?? (usedFallback = true, canned.classify.fields)
     return { fields }
   }, { doc: caseRec.doc })
 
@@ -111,27 +129,15 @@ export async function runAgent(caseRec, send) {
 
   // 5 - decide
   const decision = await emitStep(STEP_DEFS[4], 900, async () => {
-    const rules = policy.rules
-    const d = (() => {
-      if (classify.confidence < 0.8)
-        return { action: 'escalate', reason_en: `Classification confidence ${(classify.confidence * 100).toFixed(0)}% is below the 80% threshold.`, reason_ar: `ثقة التصنيف ${(classify.confidence * 100).toFixed(0)}% دون الحد الأدنى 80%.` }
-      const amb = rules.find((r) => r.result === 'fail' && r.ambiguous)
-      if (amb)
-        return { action: 'escalate', rule: amb.id, reason_en: `Rule "${amb.label_en}" failed on a discretionary point: ${amb.detail_en}`, reason_ar: `القاعدة "${amb.label_ar}" فشلت في نقطة تقديرية: ${amb.detail_ar}` }
-      const hard = rules.find((r) => r.result === 'fail')
-      if (hard)
-        return { action: 'request_info', rule: hard.id, missing_en: hard.missing_en ?? [], missing_ar: hard.missing_ar ?? [], reason_en: `Rule "${hard.label_en}" failed: ${hard.detail_en}`, reason_ar: `القاعدة "${hard.label_ar}" فشلت: ${hard.detail_ar}` }
-      const warns = rules.filter((r) => r.result === 'warn').map((r) => ({ label_en: r.label_en, label_ar: r.label_ar, detail_en: r.detail_en, detail_ar: r.detail_ar }))
-      return { action: 'approve_ready', warnings: warns, reason_en: 'All mandatory checks passed. Ready for officer sign-off.', reason_ar: 'جميع الفحوصات الإلزامية ناجحة. جاهز لتوقيع الضابط.' }
-    })()
-    return d
+    return computeDecision(classify, policy.rules)
   }, { confidence: classify.confidence, rules: policy.rules.map((r) => [r.id, r.result]) })
 
   // 6 - draft (LLM or canned)
   const draft = await emitStep(STEP_DEFS[5], 1000, async () => {
     const live = await callClaudeJSON({
+      cacheKey: `draft:${caseRec.id}`,
       system: DRAFT_SYSTEM,
-      user: `Case ${caseRec.ref} (${caseRec.subject_en}). Decision: ${JSON.stringify(decision)}. Fields: ${JSON.stringify(extraction.fields?.map((f) => [f.key, f.value]))}. Rules: ${JSON.stringify(policy.rules.map((r) => [r.id, r.result]))}.`,
+      user: draftUser(caseRec, decision, extraction, policy),
       maxTokens: 2400,
     })
     const out = live ?? (usedFallback = true, canned.draft)

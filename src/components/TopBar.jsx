@@ -14,8 +14,14 @@ function Kpi({ icon: Icon, label, value, sub, tone }) {
   )
 }
 
+const LLM_STYLE = {
+  live: { badge: 'border-accent/40 bg-accent-soft text-accent-ink', dot: 'bg-accent animate-pulse', key: 'llmLive' },
+  replay: { badge: 'border-info/40 bg-info-soft text-info', dot: 'bg-info', key: 'llmReplay' },
+  fallback: { badge: 'border-warn/40 bg-warn-soft text-warn', dot: 'bg-warn', key: 'llmFallback' },
+}
+
 export default function TopBar({ lang, setLang, dark, setDark, kpis, llm }) {
-  const live = llm === 'live'
+  const llmStyle = LLM_STYLE[llm] ?? LLM_STYLE.fallback
   return (
     <header className="flex h-14 shrink-0 items-center gap-4 border-b border-edge bg-panel px-4">
       <div className="flex min-w-0 items-center gap-2.5">
@@ -50,11 +56,11 @@ export default function TopBar({ lang, setLang, dark, setDark, kpis, llm }) {
         <span
           className={cx(
             'flex items-center gap-1.5 rounded-full border px-2.5 py-1 font-mono text-[10px] font-semibold tracking-wide',
-            live ? 'border-accent/40 bg-accent-soft text-accent-ink' : 'border-warn/40 bg-warn-soft text-warn',
+            llmStyle.badge,
           )}
         >
-          <span className={cx('h-1.5 w-1.5 rounded-full', live ? 'bg-accent' : 'bg-warn', live && 'animate-pulse')} />
-          {live ? t(lang, 'llmLive') : t(lang, 'llmFallback')}
+          <span className={cx('h-1.5 w-1.5 rounded-full', llmStyle.dot)} />
+          {t(lang, llmStyle.key)}
         </span>
 
         <div className="flex overflow-hidden rounded-md border border-edge-2 text-[11px] font-semibold">

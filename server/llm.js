@@ -1,4 +1,28 @@
+import { readFileSync, existsSync } from 'node:fs'
+import path from 'node:path'
+import { fileURLToPath } from 'node:url'
+
 const MODEL = process.env.CLAUDE_MODEL || 'claude-haiku-4-5-20251001'
+// AGENT_LLM_MODE: 'live' (call Claude, default) | 'replay' (serve captured
+// outputs only - zero API spend, for public deployments)
+const MODE = process.env.AGENT_LLM_MODE || 'live'
+// Hard cap on live calls per warm instance - bounds spend even if the
+// deployment URL leaks. Set AGENT_LLM_BUDGET=0 to disable live calls.
+const BUDGET = process.env.AGENT_LLM_BUDGET != null ? Number(process.env.AGENT_LLM_BUDGET) : 60
+let spent = 0
+
+const cachePath = path.join(path.dirname(fileURLToPath(import.meta.url)), '..', 'seed', 'live-cache.json')
+let cache = null
+function liveCache() {
+  if (cache == null) {
+    try {
+      cache = JSON.parse(readFileSync(cachePath, 'utf8'))
+    } catch {
+      cache = {}
+    }
+  }
+  return cache
+}
 
 export function llmAvailable() {
   return Boolean(process.env.ANTHROPIC_API_KEY)
@@ -6,11 +30,21 @@ export function llmAvailable() {
 export function llmModel() {
   return MODEL
 }
+// 'live' | 'replay' | 'fallback' - drives the top-bar badge
+export function llmMode() {
+  if (MODE === 'replay') return 'replay'
+  return llmAvailable() ? 'live' : 'fallback'
+}
+export function llmSpend() {
+  return { spent, budget: BUDGET }
+}
 
-// Returns parsed JSON object, or null (missing key, network error, bad JSON).
-// Callers fall back to canned outputs on null.
-export async function callClaudeJSON({ system, user, maxTokens = 2048 }) {
-  if (!llmAvailable()) return null
+// Returns parsed JSON object, or null (replay miss, no key, over budget,
+// network error, bad JSON). Callers fall back to canned outputs on null.
+export async function callClaudeJSON({ cacheKey, system, user, maxTokens = 2048 }) {
+  if (MODE === 'replay') return liveCache()[cacheKey] ?? null
+  if (!llmAvailable() || spent >= BUDGET) return null
+  spent += 1
   const ctrl = new AbortController()
   const timer = setTimeout(() => ctrl.abort(), 30000)
   try {
